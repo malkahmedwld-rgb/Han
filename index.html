@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع حنين | سينما القضاء والمجتمع</title>
+    <title>جلسة تركيز | ساعة رملية ومطر</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #8b5cf6;
+            --bg-color: #121212;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --sand-color: #d4af37; /* لون ذهبي للرمل */
+            --text-color: #e0e0e0;
+            --primary: #8b5cf6;
         }
 
         * {
@@ -22,227 +23,279 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        header {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.2), transparent);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        header h1 {
-            font-size: 3rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .movie-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: radial-gradient(circle at center, #1f1f3a 0%, #121212 100%);
         }
 
-        .movie-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+        .focus-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 450px;
         }
 
-        .video-container {
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* تصميم الساعة الرملية بـ CSS */
+        .hourglass-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .hourglass {
+            width: 80px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .glass {
+            width: 80px;
+            height: 70px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
             overflow: hidden;
-            background-color: #000;
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .video-container iframe {
+        .glass.top {
+            border-radius: 50% 50% 10px 10px;
+            border-bottom: none;
+        }
+
+        .glass.bottom {
+            border-radius: 10px 10px 50% 50%;
+            border-top: none;
+        }
+
+        .sand {
             position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+            right: 0;
+            background-color: var(--sand-color);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            transition: height 1s linear, bottom 1s linear, top 1s linear;
         }
 
-        .movie-info {
-            padding: 1.5rem;
+        .top .sand {
+            bottom: 0;
+            height: 100%; /* يبدأ ممتلئاً */
         }
 
-        .movie-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+        .bottom .sand {
+            bottom: 0;
+            height: 0%; /* يبدأ فارغاً */
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
             color: #fff;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
-        .movie-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
         }
 
-        .tag {
-            display: inline-block;
-            background-color: rgba(139, 92, 246, 0.2);
-            color: #c4b5fd;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
+        button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
         }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 3rem;
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        button#start {
+            background: var(--primary);
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        button#start:hover {
+            background: #7c3aed;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        input[type="range"] {
+            accent-color: var(--primary);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>حنين</h1>
-        <p>مكتبتك السينمائية لاكتشاف أعظم الأفلام التي جسدت القضايا القانونية، الاجتماعية، وصراعات العدالة في أروقة المحاكم.</p>
-    </header>
+    <div class="focus-container">
+        <h1>جلسة تركيز عميق</h1>
+        
+        <div class="hourglass-wrapper" id="hourglass-wrapper">
+            <div class="hourglass">
+                <div class="glass top">
+                    <div class="sand" id="top-sand"></div>
+                </div>
+                <div class="glass bottom">
+                    <div class="sand" id="bottom-sand"></div>
+                </div>
+            </div>
+        </div>
 
-    <div class="container">
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/TEN-2uTi2cM" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">12 Angry Men</h2>
-                <p class="movie-desc">دراما قانونية كلاسيكية تدور داخل غرفة مداولات هيئة المحلفين، تناقش مفهوم "الشك المعقول" والتحيز الشخصي في إصدار الأحكام.</p>
-                <span class="tag">قضاء وهيئة محلفين</span>
-            </div>
-        </article>
+        <div class="timer-display" id="time">25:00</div>
 
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/GVQbeG5yW78" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">Just Mercy</h2>
-                <p class="movie-desc">قصة حقيقية لمحامٍ شاب يتوجه إلى ألاباما للدفاع عن المحكوم عليهم بالإعدام ظلماً، مسلطاً الضوء على العنصرية النظامية.</p>
-                <span class="tag">حقوق مدنية</span>
-            </div>
-        </article>
+        <div class="controls">
+            <button id="start">ابدأ</button>
+            <button id="pause">إيقاف</button>
+            <button id="reset">إعادة ضبط</button>
+        </div>
 
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/cl4B9AU45P4" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">Philadelphia</h2>
-                <p class="movie-desc">محامٍ يقاضي شركة المحاماة التي كان يعمل بها بتهمة التمييز التعسفي بعد طرده بسبب إصابته بمرض نقص المناعة المكتسبة.</p>
-                <span class="tag">قانون العمل والتمييز</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/l6iDTIduE0M" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">Erin Brockovich</h2>
-                <p class="movie-desc">قصة حقيقية لامرأة تكتشف تورط شركة طاقة كبرى في تلويث مياه مدينة، وتقود دعوى قضائية ضخمة ضدها.</p>
-                <span class="tag">قانون البيئة والشركات</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/a6O30nJ02PU" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">The Trial of the Chicago 7</h2>
-                <p class="movie-desc">يستعرض المحاكمة الشهيرة لسبعة أشخاص اتهموا بالتآمر وإثارة الشغب، ويركز على الصدام بين السلطة وحرية التعبير.</p>
-                <span class="tag">محاكمات سياسية</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/ePo91pMcu94" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">A Few Good Men</h2>
-                <p class="movie-desc">محامٍ عسكري يدافع عن اثنين من مشاة البحرية متهمين بالقتل، ليواجه منظومة القيادة العسكرية و"الأوامر غير المكتوبة".</p>
-                <span class="tag">القانون العسكري</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/RvAOuhyunhY" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">Dark Waters</h2>
-                <p class="movie-desc">محامي دفاع عن الشركات يخاطر بمسيرته المهنية وعائلته لكشف سر مظلم يربط شركة مواد كيميائية بسلسلة من الأمراض المميتة.</p>
-                <span class="tag">قضايا التعويضات</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/EwdCIpbTN5g" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">Spotlight</h2>
-                <p class="movie-desc">فريق تحقيق صحفي يكشف عن فضيحة كبرى وتستر مؤسسي خطير، مما يسلط الضوء على دور الصحافة في كشف الجرائم للمجتمع والقانون.</p>
-                <span class="tag">جرائم وتستر مؤسسي</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/BHi-a1n8tBE" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">Marriage Story</h2>
-                <p class="movie-desc">نظرة عميقة وقاسية أحياناً على نظام الطلاق في المحاكم وكيف يمكن للإجراءات القانونية أن تزيد من تعقيد العلاقات الإنسانية والأسرية.</p>
-                <span class="tag">قانون الأسرة</span>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/KR7loA_oziY" allowfullscreen></iframe>
-            </div>
-            <div class="movie-info">
-                <h2 class="movie-title">To Kill a Mockingbird</h2>
-                <p class="movie-desc">أحد أعظم الأفلام القانونية في التاريخ، يتناول قصة المحامي أتيكوس فينش الذي يدافع عن رجل أسود متهم ظلماً في مجتمع عنصري.</p>
-                <span class="tag">عدالة جنائية</span>
-            </div>
-        </article>
+        <div class="volume-control">
+            <label for="volume">صوت المطر:</label>
+            <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+        </div>
     </div>
 
-    <footer>
-        <p>حقوق الطبع والنشر © 2026 موقع حنين. جميع الحقوق محفوظة.</p>
-    </footer>
+    <audio id="rain-audio" loop src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg"></audio>
 
+    <script>
+        // إعدادات المؤقت (بالثواني) - 25 دقيقة افتراضياً
+        const WORK_TIME = 25 * 60; 
+        let timeLeft = WORK_TIME;
+        let timerInterval = null;
+        let isRunning = false;
+        let rotationCount = 0; // لحركة قلب الساعة الرملية
+
+        // ربط عناصر HTML
+        const timeDisplay = document.getElementById('time');
+        const startBtn = document.getElementById('start');
+        const pauseBtn = document.getElementById('pause');
+        const resetBtn = document.getElementById('reset');
+        const topSand = document.getElementById('top-sand');
+        const bottomSand = document.getElementById('bottom-sand');
+        const hourglassWrapper = document.getElementById('hourglass-wrapper');
+        const rainAudio = document.getElementById('rain-audio');
+        const volumeControl = document.getElementById('volume');
+
+        // تحديث واجهة الوقت والرمل
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            // تنسيق الوقت كـ 00:00
+            timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // حساب النسبة المئوية المتبقية لتحديث ارتفاع الرمل
+            const percentage = (timeLeft / WORK_TIME) * 100;
+            
+            topSand.style.height = `${percentage}%`;
+            bottomSand.style.height = `${100 - percentage}%`;
+        }
+
+        // تشغيل المؤقت
+        function startTimer() {
+            if (isRunning) return;
+            
+            isRunning = true;
+            rainAudio.play().catch(e => console.log("المتصفح يمنع التشغيل التلقائي للصوت حتى يتفاعل المستخدم."));
+            
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    // انتهاء الوقت
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    rainAudio.pause();
+                    alert('أحسنت! انتهت جلسة التركيز. خذ استراحة قصيرة.');
+                }
+            }, 1000);
+        }
+
+        // إيقاف مؤقت
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            rainAudio.pause();
+        }
+
+        // إعادة ضبط المؤقت
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = WORK_TIME;
+            
+            // إضافة حركة دوران جذابة للساعة الرملية (كأنك تقلبها)
+            rotationCount += 180;
+            hourglassWrapper.style.transform = `rotate(${rotationCount}deg)`;
+            
+            // بسبب الدوران، نعكس اتجاه حركة الرمل برمجياً حتى يبدو منطقياً
+            if (rotationCount % 360 !== 0) {
+                topSand.style.bottom = "auto";
+                topSand.style.top = "0";
+                bottomSand.style.bottom = "auto";
+                bottomSand.style.top = "0";
+            } else {
+                topSand.style.top = "auto";
+                topSand.style.bottom = "0";
+                bottomSand.style.top = "auto";
+                bottomSand.style.bottom = "0";
+            }
+
+            updateDisplay();
+        }
+
+        // التحكم بحجم الصوت
+        volumeControl.addEventListener('input', (e) => {
+            rainAudio.volume = e.target.value;
+        });
+
+        // ربط الأزرار بالدوال
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // تهيئة العرض المبدئي
+        rainAudio.volume = volumeControl.value;
+        updateDisplay();
+    </script>
 </body>
 </html>
