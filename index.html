@@ -2,60 +2,238 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سينما القانون | NIMI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NIMI | سينما القانون</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* إعدادات عامة */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0f0f0f;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* لمنع التمرير أثناء عرض الانترو */
+        :root {
+            --bg-dark: #09090b;
+            --purple-neon: #a855f7;
+            --purple-glow: 0 0 15px rgba(168, 85, 247, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* حاوية فيديو المقدمة (الانترو) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ---------------- الانترو ---------------- */
         #intro-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background-color: #000;
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease-out; /* تأثير اختفاء سلس */
+            transition: opacity 1s ease;
         }
 
         #intro-video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* يملأ الشاشة بالكامل */
+            object-fit: cover;
         }
 
-        /* حاوية المحتوى الرئيسي (مخفية في البداية) */
-        #main-content {
-            display: none;
-            padding: 20px;
-            text-align: center;
-            height: 100%;
-            overflow-y: auto; /* إعادة التمرير للصفحة */
-            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+        /* ---------------- التطبيق الرئيسي ---------------- */
+        #app-container {
+            display: none; /* مخفي حتى ينتهي الانترو */
+            padding-bottom: 80px;
         }
 
-        h1 {
-            color: #8b5cf6; /* لون بنفسجي نيون */
-            margin-top: 50px;
+        /* الهيدر */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        p {
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--purple-neon);
+            text-shadow: var(--purple-glow);
+            letter-spacing: 2px;
+        }
+
+        .admin-btn {
+            background: none;
+            border: none;
+            color: #888;
             font-size: 1.2rem;
-            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .admin-btn:hover { color: var(--purple-neon); }
+
+        /* التصنيفات */
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px;
+            gap: 15px;
+            scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+
+        .category-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .category-btn.active {
+            background: var(--purple-neon);
+            box-shadow: var(--purple-glow);
+            border-color: var(--purple-neon);
+            color: #fff;
+        }
+
+        /* شبكة الأفلام */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 0 20px;
+        }
+
+        .movie-card {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            border-color: var(--purple-neon);
+            box-shadow: var(--purple-glow);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 220px;
+            background-color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .movie-info {
+            padding: 10px;
+        }
+
+        .movie-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-meta {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* ---------------- لوحة الأدمن (مودال) ---------------- */
+        #admin-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-box {
+            background: #111;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--purple-neon);
+            box-shadow: var(--purple-glow);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .admin-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #222;
+            color: #fff;
+            outline: none;
+        }
+
+        .admin-box input:focus { border-color: var(--purple-neon); }
+
+        .admin-box button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: none;
+            background: var(--purple-neon);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal {
+            color: #ff4444;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* الفوتر */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: 40px;
+            border-top: 1px solid var(--glass-border);
         }
     </style>
 </head>
@@ -63,44 +241,171 @@
 
     <div id="intro-container">
         <video id="intro-video" autoplay muted playsinline>
-            <source src="./vidio/intro.mp4" type="video/mp4">
-            عذراً، متصفحك لا يدعم مشغل الفيديو.
+            <source src="intro.mp4" type="video/mp4">
         </video>
     </div>
 
-    <div id="main-content">
-        <h1>مرحباً بك في منصة NIMI</h1>
-        <p>التطبيق الخاص بعرض أفلام سينما القانون.</p>
-        <p>بواسطة NINA TEAM - جميع الحقوق محفوظة © 2026</p>
+    <div id="app-container">
         
+        <header>
+            <div class="logo">NIMI</div>
+            <button class="admin-btn" onclick="openAdmin()"><i class="fas fa-user-shield"></i></button>
+        </header>
+
+        <div class="categories">
+            <button class="category-btn active" onclick="filterCategory('all', this)">الكل</button>
+            <button class="category-btn" onclick="filterCategory('asian', this)">آسيوية</button>
+            <button class="category-btn" onclick="filterCategory('european', this)">أوروبية</button>
+            <button class="category-btn" onclick="filterCategory('african', this)">أفريقية</button>
+            <button class="category-btn" onclick="filterCategory('american', this)">أمريكية</button>
         </div>
 
+        <div class="movies-grid" id="movies-grid">
+            </div>
+
+        <footer>
+            Copyright © 2026 NINA TEAM
+        </footer>
+    </div>
+
+    <div id="admin-modal">
+        <div class="admin-box" id="login-box">
+            <h2 style="color: var(--purple-neon); margin-bottom: 20px;">تسجيل دخول الإدارة</h2>
+            <input type="text" id="admin-user" placeholder="اسم المستخدم">
+            <input type="password" id="admin-pass" placeholder="كلمة المرور">
+            <button onclick="checkAdmin()">دخول</button>
+            <span class="close-modal" onclick="closeAdmin()">إلغاء</span>
+        </div>
+        
+        <div class="admin-box" id="dashboard-box" style="display: none;">
+            <h2 style="color: var(--purple-neon); margin-bottom: 20px;">إعدادات التطبيق</h2>
+            <p style="font-size: 0.9rem; color: #ccc; margin-bottom: 10px;">قم بتحديث رابط فيديو الانترو (8 ثواني):</p>
+            <input type="text" id="new-intro-url" placeholder="رابط الفيديو (mp4)">
+            <button onclick="saveSettings()">حفظ الإعدادات</button>
+            <span class="close-modal" onclick="closeAdmin()">إغلاق</span>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const introContainer = document.getElementById('intro-container');
-            const introVideo = document.getElementById('intro-video');
-            const mainContent = document.getElementById('main-content');
+        // --- 1. إدارة فيديو الانترو ---
+        const introContainer = document.getElementById('intro-container');
+        const introVideo = document.getElementById('intro-video');
+        const appContainer = document.getElementById('app-container');
 
-            // دالة لإخفاء الانترو وإظهار الموقع
-            function hideIntro() {
-                introContainer.style.opacity = '0'; // تأثير التلاشي
-                
-                // بعد ثانية واحدة (مدة تأثير التلاشي)، نخفي الحاوية تماماً ونظهر المحتوى
-                setTimeout(() => {
-                    introContainer.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    document.body.style.overflow = 'auto'; // إعادة تفعيل التمرير
-                }, 1000);
+        function showApp() {
+            introContainer.style.opacity = '0';
+            setTimeout(() => {
+                introContainer.style.display = 'none';
+                appContainer.style.display = 'block';
+                renderMovies('all'); // عرض الأفلام بعد الانترو
+            }, 1000);
+        }
+
+        introVideo.addEventListener('ended', showApp);
+        // في حال فشل التشغيل التلقائي بسبب المتصفح، تخطى الانترو بعد 8 ثواني
+        setTimeout(showApp, 8500);
+
+        // --- 2. توليد بيانات الأفلام التجريبية ---
+        const moviesData = [];
+        const regions = ['asian', 'european', 'african', 'american'];
+        const regionNames = { asian: 'آسيوي', european: 'أوروبي', african: 'أفريقي', american: 'أمريكي' };
+        
+        regions.forEach(region => {
+            for(let i = 1; i <= 25; i++) {
+                moviesData.push({
+                    id: `${region}-${i}`,
+                    title: `قضية محكمة رقم ${i} (${regionNames[region]})`,
+                    region: region,
+                    genre: 'جريمة / تحقيق',
+                    icon: 'fa-gavel'
+                });
             }
-
-            // الحدث الذي يراقب انتهاء الفيديو
-            introVideo.addEventListener('ended', hideIntro);
-
-            // كخطة بديلة (Fallback): 
-            // إذا واجه الفيديو مشكلة في التحميل أو التشغيل التلقائي بسبب سياسات المتصفح،
-            // سيتم تخطي الانترو تلقائياً بعد 8 ثوانٍ ونصف.
-            setTimeout(hideIntro, 8500); 
         });
+
+        // --- 3. عرض الأفلام والتصنيفات ---
+        function filterCategory(category, btnElement) {
+            // تلوين الزر النشط بالبنفسجي
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            renderMovies(category);
+        }
+
+        function renderMovies(category) {
+            const grid = document.getElementById('movies-grid');
+            grid.innerHTML = ''; // تنظيف الشبكة
+            
+            const filteredMovies = category === 'all' 
+                ? moviesData 
+                : moviesData.filter(m => m.region === category);
+
+            filteredMovies.forEach(movie => {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                // ميزة حفظ آخر مشاهدة (تخيلية هنا)
+                card.onclick = () => alert(`جاري تشغيل: ${movie.title}\nسيتم حفظ وقت مشاهدتك محلياً.`);
+                
+                card.innerHTML = `
+                    <div class="movie-poster">
+                        <i class="fas ${movie.icon}"></i>
+                    </div>
+                    <div class="movie-info">
+                        <div class="movie-title">${movie.title}</div>
+                        <div class="movie-meta">${movie.genre}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- 4. نظام لوحة الأدمن ---
+        const adminModal = document.getElementById('admin-modal');
+        const loginBox = document.getElementById('login-box');
+        const dashboardBox = document.getElementById('dashboard-box');
+
+        function openAdmin() {
+            adminModal.style.display = 'flex';
+            loginBox.style.display = 'block';
+            dashboardBox.style.display = 'none';
+        }
+
+        function closeAdmin() {
+            adminModal.style.display = 'none';
+            document.getElementById('admin-user').value = '';
+            document.getElementById('admin-pass').value = '';
+        }
+
+        function checkAdmin() {
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+            
+            if(user === 'Nina' && pass === 'nimi') {
+                loginBox.style.display = 'none';
+                dashboardBox.style.display = 'block';
+            } else {
+                alert('بيانات الدخول خاطئة!');
+            }
+        }
+
+        function saveSettings() {
+            const newUrl = document.getElementById('new-intro-url').value;
+            if(newUrl) {
+                // حفظ الرابط في التخزين المحلي
+                localStorage.setItem('nimi_intro_video', newUrl);
+                alert('تم حفظ إعدادات الانترو بنجاح!');
+                closeAdmin();
+            } else {
+                alert('يرجى إدخال رابط صحيح');
+            }
+        }
+
+        // فحص إذا كان الأدمن قد وضع رابط انترو جديد مسبقاً
+        window.onload = () => {
+            const savedIntro = localStorage.getItem('nimi_intro_video');
+            if(savedIntro) {
+                introVideo.src = savedIntro;
+            }
+        };
     </script>
 </body>
 </html>
