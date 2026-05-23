@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع حنين | سينما القضاء والمجتمع</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.2), transparent);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .movie-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .movie-info {
+            padding: 1.5rem;
+        }
+
+        .movie-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .movie-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>حنين</h1>
+        <p>مكتبتك السينمائية لاكتشاف أعظم الأفلام التي جسدت القضايا القانونية، الاجتماعية، وصراعات العدالة في أروقة المحاكم.</p>
+    </header>
+
+    <div class="container">
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/TEN-2uTi2cM" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">12 Angry Men</h2>
+                <p class="movie-desc">دراما قانونية كلاسيكية تدور داخل غرفة مداولات هيئة المحلفين، تناقش مفهوم "الشك المعقول" والتحيز الشخصي في إصدار الأحكام.</p>
+                <span class="tag">قضاء وهيئة محلفين</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/GVQbeG5yW78" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">Just Mercy</h2>
+                <p class="movie-desc">قصة حقيقية لمحامٍ شاب يتوجه إلى ألاباما للدفاع عن المحكوم عليهم بالإعدام ظلماً، مسلطاً الضوء على العنصرية النظامية.</p>
+                <span class="tag">حقوق مدنية</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/cl4B9AU45P4" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">Philadelphia</h2>
+                <p class="movie-desc">محامٍ يقاضي شركة المحاماة التي كان يعمل بها بتهمة التمييز التعسفي بعد طرده بسبب إصابته بمرض نقص المناعة المكتسبة.</p>
+                <span class="tag">قانون العمل والتمييز</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/l6iDTIduE0M" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">Erin Brockovich</h2>
+                <p class="movie-desc">قصة حقيقية لامرأة تكتشف تورط شركة طاقة كبرى في تلويث مياه مدينة، وتقود دعوى قضائية ضخمة ضدها.</p>
+                <span class="tag">قانون البيئة والشركات</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/a6O30nJ02PU" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">The Trial of the Chicago 7</h2>
+                <p class="movie-desc">يستعرض المحاكمة الشهيرة لسبعة أشخاص اتهموا بالتآمر وإثارة الشغب، ويركز على الصدام بين السلطة وحرية التعبير.</p>
+                <span class="tag">محاكمات سياسية</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ePo91pMcu94" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">A Few Good Men</h2>
+                <p class="movie-desc">محامٍ عسكري يدافع عن اثنين من مشاة البحرية متهمين بالقتل، ليواجه منظومة القيادة العسكرية و"الأوامر غير المكتوبة".</p>
+                <span class="tag">القانون العسكري</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/RvAOuhyunhY" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">Dark Waters</h2>
+                <p class="movie-desc">محامي دفاع عن الشركات يخاطر بمسيرته المهنية وعائلته لكشف سر مظلم يربط شركة مواد كيميائية بسلسلة من الأمراض المميتة.</p>
+                <span class="tag">قضايا التعويضات</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/EwdCIpbTN5g" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">Spotlight</h2>
+                <p class="movie-desc">فريق تحقيق صحفي يكشف عن فضيحة كبرى وتستر مؤسسي خطير، مما يسلط الضوء على دور الصحافة في كشف الجرائم للمجتمع والقانون.</p>
+                <span class="tag">جرائم وتستر مؤسسي</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/BHi-a1n8tBE" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">Marriage Story</h2>
+                <p class="movie-desc">نظرة عميقة وقاسية أحياناً على نظام الطلاق في المحاكم وكيف يمكن للإجراءات القانونية أن تزيد من تعقيد العلاقات الإنسانية والأسرية.</p>
+                <span class="tag">قانون الأسرة</span>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/KR7loA_oziY" allowfullscreen></iframe>
+            </div>
+            <div class="movie-info">
+                <h2 class="movie-title">To Kill a Mockingbird</h2>
+                <p class="movie-desc">أحد أعظم الأفلام القانونية في التاريخ، يتناول قصة المحامي أتيكوس فينش الذي يدافع عن رجل أسود متهم ظلماً في مجتمع عنصري.</p>
+                <span class="tag">عدالة جنائية</span>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <p>حقوق الطبع والنشر © 2026 موقع حنين. جميع الحقوق محفوظة.</p>
+    </footer>
+
+</body>
+</html>
